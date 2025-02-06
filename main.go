@@ -20,24 +20,28 @@ package main
 
 import (
 	"fmt"
+	"time"
 
 	"remove_subdirs/src/fileio"
+
+	"github.com/schollz/progressbar/v3"
 )
 
 func main() {
 
 	fileio.Title()
+	t0 := time.Now()
 
 	dirNames := fileio.ListDir("dir_to_clean/") // read tables in table dir
 
 	fmt.Println(dirNames)
 
+	bar := progressbar.Default(int64(len(dirNames)))
 	for _, dirName := range dirNames {
+		bar.Add(1)
 		fileio.ProcessDir(dirName)
 	}
 
-	//processing.CheckAllTables(tableNames) // verify the path on all the tables in the table dir
-
-	//processing.ProcTable(tableNames) // copy the files
-
+	fmt.Println("\ndone !")
+	fmt.Println("Elapsed time : ", time.Since(t0))
 }
