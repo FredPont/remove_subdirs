@@ -58,6 +58,7 @@ func ListFiles(dir string) []string {
 	return filesList
 }
 
+// ListFilesRecursive lists all files in a directory and its subdirectories
 func ListFilesRecursive(dir string) ([]string, error) {
 	var files []string
 	err := filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {

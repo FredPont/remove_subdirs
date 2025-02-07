@@ -13,7 +13,7 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
  Written by Frederic PONT.
- (c) Frederic Pont 2024
+ (c) Frederic Pont 2025
 */
 
 package main
@@ -41,10 +41,9 @@ func main() {
 	nbDirs := len(dirNames)
 	bar := progressbar.NewOptions(nbDirs,
 		progressbar.OptionEnableColorCodes(true),
-		//progressbar.OptionSetDescription("[cyan][1/3][reset] Writing moshable file..."),
 	)
+	// Process each dir
 	for i, dirName := range dirNames {
-		//fmt.Printf("\rProcessing %s", dirName) // Print text without shifting the progress bar to a new line
 		bar.Describe("[cyan][" + strconv.Itoa(i+1) + "/" + strconv.Itoa(nbDirs) + "][reset] " + dirName)
 		bar.Add(1)
 		fileio.ProcessDir(dirName)
