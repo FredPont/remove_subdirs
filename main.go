@@ -20,10 +20,9 @@ package main
 
 import (
 	"fmt"
+	"remove_subdirs/src/fileio"
 	"strconv"
 	"time"
-
-	"remove_subdirs/src/fileio"
 
 	"github.com/schollz/progressbar/v3"
 )
@@ -33,8 +32,7 @@ func main() {
 	fileio.Title()
 	t0 := time.Now()
 
-	dirNames := fileio.ListDir("dir_to_clean/") // read tables in table dir
-
+	dirNames, _ := fileio.ListDirWithSymlinks("dir_to_clean/")
 	fmt.Println("Folders : ", dirNames, "\n")
 
 	// Create a new progress bar
@@ -42,8 +40,8 @@ func main() {
 	bar := progressbar.NewOptions(nbDirs,
 		progressbar.OptionEnableColorCodes(true),
 	)
-	// Process each dir
 	for i, dirName := range dirNames {
+		//fmt.Printf("\rProcessing %s", dirName) // Print text without shifting the progress bar to a new line
 		bar.Describe("[cyan][" + strconv.Itoa(i+1) + "/" + strconv.Itoa(nbDirs) + "][reset] " + dirName)
 		bar.Add(1)
 		fileio.ProcessDir(dirName)

@@ -16,5 +16,6 @@ This software move all the files in a directory tree in the source directory and
 ./rmsd-x86_64_linux.bin  
 rmsd-x86_64_windows.exe  
 or double click on the .exe file (Windows)
++ Cleaned directories are in the "results" directoryl
 
 ![CLI](src/images/remove_subdirs.png)

@@ -19,6 +19,7 @@
 package fileio
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"path/filepath"
@@ -43,6 +44,27 @@ func ListDir(dir string) []string {
 	return dirsList
 }
 
+func ListDirWithSymlinks(dir string) ([]string, error) {
+	entries, err := os.ReadDir(dir)
+	if err != nil {
+		return nil, err
+	}
+
+	var dirNames []string
+	for _, entry := range entries {
+		info, err := entry.Info()
+		if err != nil {
+			return nil, err
+		}
+		if info.Mode()&os.ModeSymlink != 0 {
+			dirNames = append(dirNames, entry.Name()) // Add the symlink to the list
+		} else if entry.IsDir() {
+			dirNames = append(dirNames, entry.Name()) // Add the directory to the list
+		}
+	}
+	return dirNames, nil
+}
+
 // ListFiles lists all files in a directory
 func ListFiles(dir string) []string {
 	var filesList []string
@@ -58,9 +80,11 @@ func ListFiles(dir string) []string {
 	return filesList
 }
 
-// ListFilesRecursive lists all files in a directory and its subdirectories
 func ListFilesRecursive(dir string) ([]string, error) {
 	var files []string
+	if isSymlink(dir) {
+		dir = openSymLink(dir)
+	}
 	err := filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
 			return err
@@ -71,4 +95,25 @@ func ListFilesRecursive(dir string) ([]string, error) {
 		return nil
 	})
 	return files, err
+}
+
+func openSymLink(symlinkPath string) string {
+	// Read the target of the symlink
+	target, err := os.Readlink(symlinkPath)
+	if err != nil {
+		fmt.Println("Error reading symlink:", err)
+		return ""
+	}
+
+	fmt.Println("Symlink points to:", target)
+	return target
+}
+
+func isSymlink(path string) bool {
+	info, err := os.Lstat(path)
+	if err != nil {
+		println("Error reading symlink:", err)
+		return false // Return false
+	}
+	return info.Mode()&os.ModeSymlink != 0 // Check if the mode indicates a symlink
 }
