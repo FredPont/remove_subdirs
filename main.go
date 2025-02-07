@@ -20,6 +20,7 @@ package main
 
 import (
 	"fmt"
+	"strconv"
 	"time"
 
 	"remove_subdirs/src/fileio"
@@ -34,14 +35,21 @@ func main() {
 
 	dirNames := fileio.ListDir("dir_to_clean/") // read tables in table dir
 
-	fmt.Println(dirNames)
+	fmt.Println("Folders : ", dirNames, "\n")
 
-	bar := progressbar.Default(int64(len(dirNames)))
-	for _, dirName := range dirNames {
+	// Create a new progress bar
+	nbDirs := len(dirNames)
+	bar := progressbar.NewOptions(nbDirs,
+		progressbar.OptionEnableColorCodes(true),
+		//progressbar.OptionSetDescription("[cyan][1/3][reset] Writing moshable file..."),
+	)
+	for i, dirName := range dirNames {
+		//fmt.Printf("\rProcessing %s", dirName) // Print text without shifting the progress bar to a new line
+		bar.Describe("[cyan][" + strconv.Itoa(i+1) + "/" + strconv.Itoa(nbDirs) + "][reset] " + dirName)
 		bar.Add(1)
 		fileio.ProcessDir(dirName)
 	}
-
+	fmt.Println() // Move to the next line after the progress bar completes
 	fmt.Println("\ndone !")
 	fmt.Println("Elapsed time : ", time.Since(t0))
 }

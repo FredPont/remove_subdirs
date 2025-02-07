@@ -17,3 +17,4 @@ This software move all the files in a directory tree in the source directory and
 rmsd-x86_64_windows.exe  
 or double click on the .exe file (Windows)
 
+![CLI](src/images/remove_subdirs.png)
