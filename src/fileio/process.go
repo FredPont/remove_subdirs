@@ -33,10 +33,13 @@ func ProcessDir(dir string) {
 	if err != nil {
 		fmt.Println(err)
 	}
+	newFilePath := AppendSuffixToDuplicates(allfiles)
+	//fmt.Println(allfiles, newFilePath)
+	for i, file := range allfiles {
 
-	for _, file := range allfiles {
-		filename := filepath.Base(file)
-		CopyFile(file, outDir+"/"+filename)
+		//filename := filepath.Base(file)
+		newFilename := filepath.Base(newFilePath[i])
+		CopyFile(file, outDir+"/"+newFilename)
 		//fmt.Println(file)
 	}
 

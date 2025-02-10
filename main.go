@@ -33,7 +33,8 @@ func main() {
 	t0 := time.Now()
 
 	dirNames, _ := fileio.ListDirWithSymlinks("dir_to_clean/")
-	fmt.Println("Folders : ", dirNames, "\n")
+	fmt.Println("Folders : ", dirNames)
+	println()
 
 	// Create a new progress bar
 	nbDirs := len(dirNames)
@@ -41,7 +42,6 @@ func main() {
 		progressbar.OptionEnableColorCodes(true),
 	)
 	for i, dirName := range dirNames {
-		//fmt.Printf("\rProcessing %s", dirName) // Print text without shifting the progress bar to a new line
 		bar.Describe("[cyan][" + strconv.Itoa(i+1) + "/" + strconv.Itoa(nbDirs) + "][reset] " + dirName)
 		bar.Add(1)
 		fileio.ProcessDir(dirName)
