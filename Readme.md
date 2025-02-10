@@ -6,6 +6,7 @@ This software move all the files in a directory tree in the source directory and
 # Features
 - Compiled binary statically linked : nothing to install
 - Clean an unlimited number of directories
+- File duplicates detection : a suffix number is append to duplicates
 - A copy of the files is made  in the "results" directory without removing the orignal ones
 
 # Quick start
