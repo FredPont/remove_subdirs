@@ -34,7 +34,7 @@ func TestAppendSuffixToDuplicates(t *testing.T) {
 		{[]string{"file1.txt", "file1.txt", "file3.txt"}, []string{"file1.txt", "file1_001.txt", "file3.txt"}},
 		{[]string{"file1", "file2.txt", "file3.txt"}, []string{"file1", "file2.txt", "file3.txt"}},
 		{[]string{"file1.txt", "file1.txt", "file3.txt", "file2", "file2"}, []string{"file1.txt", "file1_001.txt", "file3.txt", "file2", "file2_001"}},
-		{[]string{"dir1/dir2/dir3/file1.txt", "dir1/dir2/dir3/dir4/file1.txt"}, []string{"dir1/dir2/dir3/file1.txt", "dir1/dir2/dir3/dir4/file1_001.txt"}},
+		{[]string{"dir1/dir2/dir3/file1.txt", "dir1/dir2/dir3/dir4/file1.txt", "file1.txt"}, []string{"file1.txt", "file1_001.txt", "file1_002.txt"}},
 	}
 	for i, tc := range tests {
 		t.Run(fmt.Sprintf("IsRemote=%d", i), func(t *testing.T) {

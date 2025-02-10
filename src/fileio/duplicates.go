@@ -26,7 +26,8 @@ import (
 // AppendSuffixToDuplicates append number to duplicate file names : file_001.xxx, file002.xxx etc...
 func AppendSuffixToDuplicates(filePaths []string) []string {
 	countMap := make(map[string]int)
-	result := make([]string, len(filePaths))
+	result := make([]string, len(filePaths)) // list of new file names with eventually a suffix for duplicates
+	var duplicates []string
 
 	for i, filePath := range filePaths {
 		filename := filepath.Base(filePath) // extract the filename from path
@@ -34,13 +35,17 @@ func AppendSuffixToDuplicates(filePaths []string) []string {
 			ext := filepath.Ext(filename)
 			name := strings.TrimSuffix(filename, ext)
 			count++
-			suffix := fmt.Sprintf("_%03d", count-1)                            // -1 to start with 001 not 002
-			result[i] = filepath.Join(filepath.Dir(filePath), name+suffix+ext) //create
+			suffix := fmt.Sprintf("_%03d", count-1) // -1 to start with 001 not 002
+			result[i] = name + suffix + ext         //create a new file name
 			countMap[filename] = count
+			duplicates = append(duplicates, filePath)
 		} else {
-			result[i] = filePath
+			result[i] = filename
 			countMap[filename] = 1
 		}
 	}
+	println()
+	fmt.Println(len(duplicates), "duplicates found !")
+	fmt.Println(duplicates)
 	return result
 }

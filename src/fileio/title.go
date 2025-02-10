@@ -23,7 +23,7 @@ import "fmt"
 func Title() {
 
 	fmt.Println("   ┌───────────────────────────────────────────────────┐") // unicode U+250C
-	fmt.Println("   │ Remove SubDirs v20250209 (c)Frederic PONT 2025    │")
+	fmt.Println("   │ Remove SubDirs v20250210 (c)Frederic PONT 2025    │")
 	fmt.Println("   │     Free Software GNU General Public License      │")
 	fmt.Println("   └───────────────────────────────────────────────────┘")
 	fmt.Println("")

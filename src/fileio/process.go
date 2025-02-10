@@ -20,7 +20,6 @@ package fileio
 
 import (
 	"fmt"
-	"path/filepath"
 )
 
 func ProcessDir(dir string) {
@@ -33,15 +32,11 @@ func ProcessDir(dir string) {
 	if err != nil {
 		fmt.Println(err)
 	}
-	newFilePath := AppendSuffixToDuplicates(allfiles)
-	//fmt.Println(allfiles, newFilePath)
-	for i, file := range allfiles {
+	newFileNames := AppendSuffixToDuplicates(allfiles) // list of initial files with a suffix 001, 002... for duplicates
 
-		//filename := filepath.Base(file)
-		newFilename := filepath.Base(newFilePath[i])
+	for i, file := range allfiles {
+		newFilename := newFileNames[i]
 		CopyFile(file, outDir+"/"+newFilename)
-		//fmt.Println(file)
 	}
 
-	//fmt.Println(allfiles)
 }
