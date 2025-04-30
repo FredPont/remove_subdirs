@@ -39,6 +39,7 @@ func AppendSuffixToDuplicates(filePaths []string) []string {
 			result[i] = name + suffix + ext         //create a new file name
 			countMap[filename] = count
 			duplicates = append(duplicates, filePath)
+			//duplicates = append(duplicates, filename)
 		} else {
 			result[i] = filename
 			countMap[filename] = 1
@@ -46,6 +47,18 @@ func AppendSuffixToDuplicates(filePaths []string) []string {
 	}
 	println()
 	fmt.Println(len(duplicates), "duplicates found !")
-	fmt.Println(duplicates)
+	//fmt.Println(duplicates)
+	showDuplicates(duplicates)
 	return result
+}
+
+func showDuplicates(duplicates []string) {
+	fmt.Println("Duplicates:")
+	for _, file := range duplicates {
+		fmt.Println(file)
+	}
+	fmt.Println()
+	fmt.Println("Duplicates found:", len(duplicates))
+	//fmt.Println()
+
 }
